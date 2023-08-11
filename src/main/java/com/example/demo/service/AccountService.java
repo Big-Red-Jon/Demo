@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.example.demo.model.Account;
-
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-// AccountService.java
 @Service
 public class AccountService {
     @Autowired
@@ -34,7 +32,7 @@ public class AccountService {
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             account.setBalance(account.getBalance().add(amount));
-            return accountRepository.saveAccount(account);
+            return accountRepository.save(account);
         }
         return null; // Handle account not found
     }
@@ -43,7 +41,7 @@ public class AccountService {
         Account account = accountRepository.findById(accountId).orElse(null);
         if (account != null && account.getBalance().compareTo(amount) >= 0) {
             account.setBalance(account.getBalance().subtract(amount));
-            return accountRepository.saveAccount(account);
+            return accountRepository.save(account);
         }
         return null; // Handle insufficient funds or account not found
     }
@@ -54,22 +52,31 @@ public class AccountService {
             return account.getBalance();
         }
         return BigDecimal.ZERO; // Handle account not found
+
     }
 
     public Account createAccount(Account newAccount) {
+        // Implementation for createAccount method
         return null;
     }
 
     public Account getAccount(Long accountId) {
         return null;
+        // Implementation for getAccount method
     }
 
     public Account updateAccount(Long accountId, Account updatedAccount) {
+        // Implementation for updateAccount method
         return null;
     }
 
     public boolean deleteAccount(Long accountId) {
-        return false;
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        if (accountOptional.isPresent()) {
+            accountRepository.delete(accountOptional.get());
+            return true; // Account was deleted successfully
+        } else {
+            return false; // Account was not found
+        }
     }
-
 }
