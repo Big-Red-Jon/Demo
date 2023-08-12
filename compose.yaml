@@ -1,11 +1,12 @@
 version: '3'
 services:
   app:
-    image: demo-docker
+    build:
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    volumes:
-      - /Users/jonathanbrooks/workspace/demo/target/demo-0.0.1-SNAPSHOT.jar:/app/demo-0.0.1-SNAPSHOT.jar
+    # volumes:
+    #   - /Users/jonathanbrooks/workspace/demo/target/demo-0.0.1-SNAPSHOT.jar:/app/demo-0.0.1-SNAPSHOT.jar
     environment:
       SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
