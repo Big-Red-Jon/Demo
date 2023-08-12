@@ -29,11 +29,8 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<AccountService> accounts = new ArrayList<>();
+    private List<Account> accounts = new ArrayList<>();
+
     // Getters and setters
 }
