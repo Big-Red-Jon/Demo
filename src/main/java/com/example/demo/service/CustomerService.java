@@ -26,32 +26,33 @@ public class CustomerService {
         return customerRepository.findById(customerId).orElse(null);
     }
 
-    public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
-        Customer existingCustomer = customerRepository.findById(customerId).orElse(null);
-        if (existingCustomer != null) {
-            // Update properties of existingCustomer with properties from updatedCustomer
-            // Example: existingCustomer.setName(updatedCustomer.getName());
-            // ...
-            return customerRepository.save(existingCustomer);
-        }
-        return null;
-    }
+    // public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
+    // Customer existingCustomer =
+    // customerRepository.findById(customerId).orElse(null);
+    // if (existingCustomer != null) {
+    // // Update properties of existingCustomer with properties from updatedCustomer
+    // // Example: existingCustomer.setName(updatedCustomer.getName());
+    // // ...
+    // return customerRepository.save(existingCustomer);
+    // }
+    // return null;
+    // }
 
-    public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
-    }
+    // public Customer createCustomer(Customer customer) {
+    // return customerRepository.save(customer);
+    // }
 
-    public Customer updateCustomerDetails(Customer updatedCustomer) {
-        return customerRepository.save(updatedCustomer);
-    }
+    // public Customer updateCustomerDetails(Customer updatedCustomer) {
+    // return customerRepository.save(updatedCustomer);
+    // }
 
-    public boolean deleteCustomer(Long id) {
-        Optional<Customer> customerOptional = customerRepository.findById(id);
-        if (customerOptional.isPresent()) {
-            customerRepository.delete(customerOptional.get());
-            return true; // Customer was deleted successfully
-        } else {
-            return false; // Customer was not found
-        }
-    }
+    // public boolean deleteCustomer(Long id) {
+    // Optional<Customer> customerOptional = customerRepository.findById(id);
+    // if (customerOptional.isPresent()) {
+    // customerRepository.delete(customerOptional.get());
+    // return true; // Customer was deleted successfully
+    // } else {
+    // return false; // Customer was not found
+    // }
+    // }
 }
