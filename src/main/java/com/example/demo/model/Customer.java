@@ -2,9 +2,6 @@ package com.example.demo.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
-// import com.example.demo.service.AccountService;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
