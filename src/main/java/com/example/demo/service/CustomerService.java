@@ -8,7 +8,6 @@ import com.example.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// CustomerService.java
 @Service
 public class CustomerService {
     @Autowired
@@ -18,33 +17,32 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    // public Customer createCustomer(Customer newCustomer) {
-    // return null;
-    // }
-
-    public Customer getCustomer(Long customerId) {
-        return null;
-    }
-
-    public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
-        return customerRepository.save(customerId);
-    }
-
-    // public boolean deleteCustomer(Long customerId) {
-    // return false;
-    // }
-
     public Customer getCustomerById(Long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         return customerOptional.orElse(null);
+    }
+
+    public Customer getCustomer(Long customerId) {
+        return customerRepository.findById(customerId).orElse(null);
+    }
+
+    public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
+        Customer existingCustomer = customerRepository.findById(customerId).orElse(null);
+        if (existingCustomer != null) {
+            // Update properties of existingCustomer with properties from updatedCustomer
+            // Example: existingCustomer.setName(updatedCustomer.getName());
+            // ...
+            return customerRepository.save(existingCustomer);
+        }
+        return null;
     }
 
     public Customer createCustomer(Customer customer) {
         return customerRepository.save(customer);
     }
 
-    public Customer updateCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer updateCustomerDetails(Customer updatedCustomer) {
+        return customerRepository.save(updatedCustomer);
     }
 
     public boolean deleteCustomer(Long id) {
