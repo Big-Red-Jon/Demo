@@ -5,6 +5,7 @@ CREATE TABLE Customer (
 );
 CREATE TABLE Account (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
     balance DECIMAL(10, 2),
     customer_id BIGINT,
     FOREIGN KEY (customer_id) REFERENCES Customer(id)

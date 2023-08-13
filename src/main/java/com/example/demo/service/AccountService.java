@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.example.demo.model.Account;
+import com.example.demo.model.Customer;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,12 +15,14 @@ import java.util.Optional;
 
 import javax.naming.InsufficientResourcesException;
 import javax.security.auth.login.AccountNotFoundException;
-// import javax.transaction.TransactionalException;
 
 @Service
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
@@ -36,11 +40,34 @@ public class AccountService {
             synchronized (account) {
                 BigDecimal newBalance = account.getBalance().add(amount);
                 account.setBalance(newBalance);
+                // System.out.println(account);
                 return accountRepository.save(account);
             }
         } else {
             throw new AccountNotFoundException("Account not found");
         }
+    }
+
+    public Account createAccount(Long customerId, BigDecimal initialBalance) {
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+
+        if (customer != null) {
+            Account account = new Account(initialBalance, customer);
+            return accountRepository.save(account);
+        }
+
+        return null; // Handle customer not found
+    }
+
+    public void deleteAccount(Long accountId) throws AccountNotFoundException {
+        Account account = getAccountById(accountId);
+        accountRepository.delete(account);
+    }
+
+    public Account editAccount(Long accountId, BigDecimal newBalance) throws AccountNotFoundException {
+        Account account = getAccountById(accountId);
+        account.setBalance(newBalance);
+        return accountRepository.save(account);
     }
 
     public Account withdraw(Long accountId, BigDecimal amount)

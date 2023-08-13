@@ -12,9 +12,12 @@ import javax.security.auth.login.AccountNotFoundException;
 import com.example.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +44,38 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/{accountId}/deposit")
+    @PostMapping("/create")
+    public ResponseEntity<Account> createAccount(@RequestParam Long customerId,
+            @RequestParam BigDecimal initialBalance) {
+        Account newAccount = accountService.createAccount(customerId, initialBalance);
+        if (newAccount != null) {
+            return ResponseEntity.ok(newAccount);
+        } else {
+            return ResponseEntity.badRequest().build(); // Handle customer not found
+        }
+    }
+
+    @PutMapping("/{accountId}/edit")
+    public ResponseEntity<Account> editAccount(@PathVariable Long accountId, @RequestParam BigDecimal newBalance) {
+        try {
+            Account updatedAccount = accountService.editAccount(accountId, newBalance);
+            return ResponseEntity.ok(updatedAccount);
+        } catch (AccountNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{accountId}/delete")
+    public ResponseEntity<?> deleteAccount(@PathVariable Long accountId) {
+        try {
+            accountService.deleteAccount(accountId);
+            return ResponseEntity.ok("Account deleted successfully");
+        } catch (AccountNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{accountId}/deposit")
     public ResponseEntity<Account> deposit(@PathVariable Long accountId, @RequestParam BigDecimal amount) {
         try {
             Account updatedAccount = accountService.deposit(accountId, amount);
@@ -51,7 +85,7 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/{accountId}/withdraw")
+    @PutMapping("/{accountId}/withdraw")
     public ResponseEntity<?> withdraw(@PathVariable Long accountId, @RequestParam BigDecimal amount) {
         try {
             Account updatedAccount = accountService.withdraw(accountId, amount);
@@ -74,4 +108,22 @@ public class AccountController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/transfer")
+    public ResponseEntity<?> transferFunds(
+            @RequestParam Long sourceAccountId,
+            @RequestParam Long targetAccountId,
+            @RequestParam BigDecimal amount) {
+        try {
+            accountService.transfer(sourceAccountId, targetAccountId, amount);
+            return ResponseEntity.ok("Funds transferred successfully");
+        } catch (AccountNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (InsufficientResourcesException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Insufficient funds for transfer");
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
 }
