@@ -30,16 +30,20 @@ public class Account {
     private Customer customer;
 
     public void transferTo(Account targetAccount, BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
+        if (targetAccount == null) {
+            throw new IllegalArgumentException("Target account cannot be null");
+        }
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Amount must be positive and non-null");
         }
 
         if (this.equals(targetAccount)) {
             throw new IllegalArgumentException("Cannot transfer to the same account");
         }
 
-        if (this.getBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Insufficient balance");
+        if (this.getBalance() == null || this.getBalance().compareTo(amount) < 0) {
+            throw new IllegalArgumentException("Insufficient balance or balance is null");
         }
 
         this.setBalance(this.getBalance().subtract(amount));
