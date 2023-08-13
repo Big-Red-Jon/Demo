@@ -19,12 +19,9 @@ class CustomerTest {
         Account account2 = new Account();
         account2.setBalance(BigDecimal.valueOf(200));
 
-        // Add accounts to customer (assuming Customer class has a method to add
-        // accounts)
         customer.addAccount(account1);
         customer.addAccount(account2);
 
-        // Verify accounts are added correctly
         List<Account> customerAccounts = customer.getAccounts();
         assertEquals(2, customerAccounts.size());
         assertTrue(customerAccounts.contains(account1));
