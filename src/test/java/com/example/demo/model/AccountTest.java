@@ -7,22 +7,6 @@ import java.math.BigDecimal;
 
 class AccountTest {
 
-    // @Test
-    // void testTransferToValid() {
-    // Account sourceAccount = new Account();
-    // sourceAccount.setBalance(BigDecimal.valueOf(100));
-
-    // Account targetAccount = new Account();
-    // targetAccount.setBalance(BigDecimal.valueOf(50));
-
-    // BigDecimal transferAmount = BigDecimal.valueOf(30);
-
-    // sourceAccount.transferTo(targetAccount, transferAmount);
-
-    // assertEquals(sourceAccount.getBalance(), BigDecimal.valueOf(70));
-    // assertEquals(targetAccount.getBalance(), BigDecimal.valueOf(80));
-    // }
-
     @Test
     void testTransferToSameAccount() {
         Account account = new Account();

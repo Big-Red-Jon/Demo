@@ -6,7 +6,6 @@ import java.util.List;
 import com.example.demo.model.Account;
 import com.example.demo.model.Customer;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
@@ -40,7 +39,6 @@ public class AccountService {
             synchronized (account) {
                 BigDecimal newBalance = account.getBalance().add(amount);
                 account.setBalance(newBalance);
-                // System.out.println(account);
                 return accountRepository.save(account);
             }
         } else {
@@ -48,15 +46,13 @@ public class AccountService {
         }
     }
 
-    public Account createAccount(Long customerId, BigDecimal initialBalance) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-
+    public Account createAccount(Long customerId, BigDecimal initialBalance, String name) {
+        Customer customer = customerService.getCustomerById(customerId);
         if (customer != null) {
-            Account account = new Account(initialBalance, customer);
-            return accountRepository.save(account);
+            Account newAccount = new Account(initialBalance, customer, name);
+            return accountRepository.save(newAccount);
         }
-
-        return null; // Handle customer not found
+        return null;
     }
 
     public void deleteAccount(Long accountId) throws AccountNotFoundException {
@@ -95,7 +91,7 @@ public class AccountService {
 
     public Account getAccount(Long accountId) {
         Optional<Account> accountOptional = accountRepository.findById(accountId);
-        return accountOptional.orElse(null); // Return the found account or null if not found
+        return accountOptional.orElse(null);
     }
 
     public BigDecimal getAccountBalance(Long accountId) {
@@ -103,7 +99,7 @@ public class AccountService {
         if (account != null) {
             return account.getBalance();
         }
-        return BigDecimal.ZERO; // Handle account not found
+        return BigDecimal.ZERO;
 
     }
 

@@ -18,11 +18,6 @@ import org.springframework.http.ResponseEntity;
 import javax.naming.InsufficientResourcesException;
 import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
-import java.util.Map;
-
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.HttpMethod;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountControllerTest {
@@ -120,42 +115,6 @@ public class AccountControllerTest {
 
         verify(accountService).withdraw(accountId, withdrawalAmount);
     }
-
-    // @Test
-    // void testWithdraw_InsufficientFunds() throws AccountNotFoundException,
-    // InsufficientResourcesException {
-    // Long accountId = 1L;
-    // BigDecimal withdrawalAmount = BigDecimal.valueOf(50);
-    // when(accountService.withdraw(accountId, withdrawalAmount)).thenThrow(new
-    // InsufficientResourcesException());
-
-    // ResponseEntity<?> response = accountController.withdraw(accountId,
-    // withdrawalAmount);
-
-    // assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-
-    // // Check if response body is not null
-    // assertNotNull(response.getBody());
-
-    // ParameterizedTypeReference<Map<String, String>> responseType = new
-    // ParameterizedTypeReference<>() {
-    // };
-    // ResponseEntity<Map<String, String>> exchangeResponse = new RestTemplate()
-    // .exchange("http://localhost:8080/accounts/{accountId}/withdraw",
-    // HttpMethod.POST,
-    // null,
-    // responseType,
-    // accountId);
-
-    // // Check if the response from the RestTemplate is not null
-    // assertNotNull(exchangeResponse.getBody());
-
-    // Map<String, String> errorResponse = exchangeResponse.getBody();
-    // assertEquals("Insufficient funds for withdrawal",
-    // errorResponse.get("error"));
-
-    // verify(accountService).withdraw(accountId, withdrawalAmount);
-    // }
 
     @Test
     void testGetAccountBalance_ValidBalance() {

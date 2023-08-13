@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-// Customer.java
 @Entity
 public class Customer {
     @Id
@@ -22,7 +21,6 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Account> accounts = new ArrayList<>();
 
-    // No-argument constructor
     public Customer() {
     }
 
@@ -49,7 +47,7 @@ public class Customer {
 
     public void addAccount(Account account) {
         accounts.add(account);
-        account.setCustomer(this); // Set the account's customer reference
+        account.setCustomer(this);
     }
 
     public List<Account> getAccounts() {
@@ -64,5 +62,4 @@ public class Customer {
         this.id = id;
     }
 
-    // Getters and setters for firstName and lastName
 }
