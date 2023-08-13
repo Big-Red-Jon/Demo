@@ -18,6 +18,8 @@ public class Account {
 
     private BigDecimal balance;
 
+    private String name;
+
     public BigDecimal getBalance() {
         return balance;
     }
@@ -52,6 +54,14 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     // Getters and setters

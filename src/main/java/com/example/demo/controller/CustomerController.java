@@ -36,5 +36,16 @@ public class CustomerController {
         }
     }
 
+    @GetMapping("/{customerId}/name")
+    public ResponseEntity<String> getCustomerName(@PathVariable Long customerId) {
+        Customer customer = customerService.getCustomer(customerId);
+        if (customer != null) {
+            String fullName = customer.getFirstName() + " " + customer.getLastName();
+            return ResponseEntity.ok(fullName);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // You can also define additional methods related to customers here if needed
 }

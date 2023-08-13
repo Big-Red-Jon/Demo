@@ -19,13 +19,25 @@ public class Customer {
     private String firstName;
     private String lastName;
 
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Account> accounts = new ArrayList<>();
+
+    // No-argument constructor
+    public Customer() {
+    }
+
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Account> accounts = new ArrayList<>();
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 
     public void addAccount(Account account) {
         accounts.add(account);
@@ -40,10 +52,9 @@ public class Customer {
         return id;
     }
 
-    // Public method to set the ID
     public void setId(Long id) {
         this.id = id;
     }
 
-    // Getters and setters
+    // Getters and setters for firstName and lastName
 }
