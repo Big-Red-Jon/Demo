@@ -2,20 +2,27 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Account;
 import com.example.demo.service.AccountService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import javax.naming.InsufficientResourcesException;
 import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpMethod;
 
 @ExtendWith(MockitoExtension.class)
 public class AccountControllerTest {
@@ -123,10 +130,23 @@ public class AccountControllerTest {
         ResponseEntity<?> response = accountController.withdraw(accountId, withdrawalAmount);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Map);
 
-        Map<String, String> errorResponse = (Map<String, String>) response.getBody();
+        // Check if response body is not null
+        assertNotNull(response.getBody());
+
+        ParameterizedTypeReference<Map<String, String>> responseType = new ParameterizedTypeReference<>() {
+        };
+        ResponseEntity<Map<String, String>> exchangeResponse = new RestTemplate()
+                .exchange("http://localhost:8080/accounts/{accountId}/withdraw",
+                        HttpMethod.POST,
+                        null,
+                        responseType,
+                        accountId);
+
+        // Check if the response from the RestTemplate is not null
+        assertNotNull(exchangeResponse.getBody());
+
+        Map<String, String> errorResponse = exchangeResponse.getBody();
         assertEquals("Insufficient funds for withdrawal", errorResponse.get("error"));
 
         verify(accountService).withdraw(accountId, withdrawalAmount);
