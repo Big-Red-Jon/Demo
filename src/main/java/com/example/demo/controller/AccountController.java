@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Account;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.InsufficientResourcesException;
@@ -23,6 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+
+    @GetMapping
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        List<Account> accounts = accountService.getAllAccounts();
+        return ResponseEntity.ok(accounts);
+    }
 
     @GetMapping("/{accountId}")
     public ResponseEntity<Account> getAccount(@PathVariable Long accountId) {
