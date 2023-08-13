@@ -1,31 +1,99 @@
-# Demo
-HCA Parallon Java Code Exercise
+# Demo - HCA Parallon Java Code Exercise
 
-mvn clean install
+This is a simple Spring Boot application that demonstrates the implementation of a RESTful API for managing customer accounts. The application allows you to create, update, delete, and retrieve customer accounts using various endpoints.
 
-mvn spring-boot:run
+## Technologies Used
 
-Access the H2 Console: With the above configuration in place, you can access the H2 Console by opening your web browser and navigating to the URL: http://localhost:8080/h2-console.
+- Java 11
+- Spring Boot 2.5.5
+- Spring Data JPA
+- H2 Database
+- Springfox Swagger for API Documentation
 
-Enter Connection Details: On the H2 Console login page, you'll see a form to enter the database connection details:
+## Setup and Running
 
-JDBC URL: This should match the spring.datasource.url value from your configuration. In the example above, it's jdbc:h2:mem:testdb.
-Username: Use the spring.datasource.username value from your configuration. In the example above, it's sa.
-Password: Leave this field empty or use the spring.datasource.password value from your configuration.
-Login to H2 Console: After entering the connection details, click the "Connect" button to log in to the H2 Console.
+1. Clone the repository:
+git clone: https://github.com/Big-Red-Jon/Demo
+2. Navigate to the project directory: cd demo
+3. Build and run the application using Maven: mvn spring-boot:run
+4. Access the Swagger UI documentation at: http://localhost:8080/demo/swagger-ui/index.html
+5. Access the H2 Console: Open your web browser and navigating to the URL: http://localhost:8080/h2-console.
+6. Enter Connection Details: 
+* On the H2 Console login page, you'll see a form to enter the database connection details:
+* - JDBC URL: This should match the `spring.datasource.url` value from your configuration (e.g., `jdbc:h2:mem:testdb`).
+* - Username: Use the `spring.datasource.username` value from your configuration (e.g., `sa`).
+* - Password: Leave this field empty or use the `spring.datasource.password` value from your configuration.
+7. Login to H2 Console: After entering the connection details, click the "Connect" button to log in to the H2 Console.
+8. Use H2 Console: Once you're logged in, you'll have access to the H2 Console's web interface. You can execute SQL queries, view tables, and interact with the in-memory database.
+9. Make sure to follow these steps when interacting with the API endpoints to ensure proper functionality.
 
-Use H2 Console: Once you're logged in, you'll have access to the H2 Console's web interface. You can execute SQL queries, view tables, and interact with the in-memory database.
+## API Endpoints
 
-http://localhost:8080/swagger-ui.html
+### Customers
 
- // System.out.println(account); Simple Fix Log
+- GET /customers: Retrieve all customers
+- GET /customers/{customerId}: Retrieve a specific customer by ID
+- POST /customers: Create a new customer
+- PUT /customers/{customerId}: Update an existing customer
+- DELETE /customers/{customerId}: Delete a customer
+
+### Accounts
+
+- GET /accounts: Retrieve all accounts
+- GET /accounts/{accountId}: Retrieve a specific account by ID
+- POST /accounts/create: Create a new account
+- PUT /accounts/{accountId}/edit: Update an account's balance
+- DELETE /accounts/{accountId}/delete: Delete an account
+- PUT /accounts/{accountId}/deposit: Deposit funds into an account
+- PUT /accounts/{accountId}/withdraw: Withdraw funds from an account
+- GET /accounts/{accountId}/balance: Retrieve the balance of an account
+- PUT /accounts/transfer: Transfer funds between accounts
+
+## Project Structure
+
+- `src/main/java/com/example/demo/controller`: Contains the REST controllers for handling customer and account operations.
+- `src/main/java/com/example/demo/model`: Contains the domain model classes (Customer and Account).
+- `src/main/java/com/example/demo/service`: Contains the service classes responsible for business logic.
+- `src/main/java/com/example/demo/repository`: Contains the JPA repositories for database interactions.
+- `src/main/java/com/example/demo`: Contains the main application class and Swagger configuration.
+
+## Usage Tips
+
+- When creating a new account via Postman, make sure to use Raw JSON and set the `Content-Type` header to `application/json`.
+- After creating a new customer, change the `Content-Type` header back to `multipart/form-data` for other CRUD operations.
+
+System Architecture Diagram:
+
+                        +-------------------+
+                        |    Swagger UI     |
+                        |   Documentation   |
+                        +-------------------+
+                               |
+                               v
+                        +-------------------+
+                        |    Spring Boot    |
+                        |    Application    |
+                        +-------------------+
+                               |
+              +----------------|-----------------+
+              |                v                 |
++-------------------+    +-------------------+    |
+| Customer API      |    |    Account API    |    |
+|   Endpoints       |    |   Endpoints       |    |
+| GET /customers    |    | GET /accounts     |    |
+| POST /customers   |    | POST /accounts    |    |
+| PUT /customers    |    | PUT /accounts     |    |
+| DELETE /customers |    | DELETE /accounts  |    |
++-------------------+    +-------------------+    |
+              |                |                 |
+              +----------------|-----------------+
+                               |
+                               v
+                        +-------------------+
+                        |     H2 Database    |
+                        |   (In-Memory)     |
+                        +-------------------+
 
 
- When you create a new account via postman, make sure you use Raw json to do so 
-    example {
-    "firstName": "Jane",
-    "lastName": "Doe"
-}
- Make sure you go to Headers and create a new Content-Type Key and in the value add "application/json" The create will not work otherwise. 
 
- All other CRUD can be done with a simple form-data, but make sure after a new customer is created that you change the Content-Type back to "multipart/form-data; boundary=<calculated when request is sent>"
+
