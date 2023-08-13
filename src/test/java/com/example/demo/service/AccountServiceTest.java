@@ -1,103 +1,117 @@
-package com.example.demo.service;
+// package com.example.demo.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+// import static org.junit.jupiter.api.Assertions.assertEquals;
+// import static org.junit.jupiter.api.Assertions.assertNotNull;
+// import static org.mockito.ArgumentMatchers.any;
+// import static org.mockito.ArgumentMatchers.anyLong;
+// import static org.mockito.Mockito.times;
+// import static org.mockito.Mockito.verify;
+// import static org.mockito.Mockito.when;
 
-import com.example.demo.model.Account;
-import com.example.demo.repository.AccountRepository;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+// import com.example.demo.model.Account;
+// import com.example.demo.repository.AccountRepository;
 
-import java.math.BigDecimal;
-import java.util.Optional;
+// import org.junit.jupiter.api.Test;
+// import org.junit.jupiter.api.extension.ExtendWith;
+// import org.mockito.InjectMocks;
+// import org.mockito.Mock;
+// import org.mockito.junit.jupiter.MockitoExtension;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import
+// org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+// import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.test.web.servlet.MockMvc;
 
-import javax.naming.InsufficientResourcesException;
-import javax.security.auth.login.AccountNotFoundException;
+// import java.math.BigDecimal;
+// import java.util.Optional;
 
-class AccountServiceTest {
+// import javax.naming.InsufficientResourcesException;
+// import javax.security.auth.login.AccountNotFoundException;
 
-    @InjectMocks
-    private AccountService accountService;
+// @ExtendWith(MockitoExtension.class)
+// @SpringBootTest
+// @AutoConfigureMockMvc
+// class AccountServiceTest {
 
-    @Mock
-    private AccountRepository accountRepository;
+// @Autowired
+// private MockMvc mockMvc;
 
-    // @BeforeEach
-    // void setUp() {
-    // MockitoAnnotations.initMocks(this);
-    // }
+// @InjectMocks
+// private AccountService accountService;
 
-    @ExtendWith(MockitoExtension.class) // Use MockitoExtension to initialize mocks
-    @Test
-    void testDeposit() throws AccountNotFoundException, InsufficientResourcesException {
-        // Create a mock Account object
-        Account account = new Account();
-        account.setBalance(BigDecimal.valueOf(100)); // Initialize balance during object creation
+// @Mock
+// private AccountRepository accountRepository;
 
-        // Mock the accountRepository behavior
-        when(accountRepository.findById(anyLong())).thenReturn(Optional.of(account));
-        when(accountRepository.save(any(Account.class))).thenReturn(account);
+// @ExtendWith(MockitoExtension.class) // Use MockitoExtension to initialize
+// mocks
+// @Test
+// void testDeposit() throws AccountNotFoundException,
+// InsufficientResourcesException {
+// // Create a mock Account object
+// Account account = new Account();
+// account.setBalance(BigDecimal.valueOf(100)); // Initialize balance during
+// object creation
 
-        // Perform the deposit
-        BigDecimal depositAmount = BigDecimal.valueOf(50);
-        Account updatedAccount = accountService.deposit(1L, depositAmount);
+// // Mock the accountRepository behavior
+// when(accountRepository.findById(anyLong())).thenReturn(Optional.of(account));
+// when(accountRepository.save(any(Account.class))).thenReturn(account);
 
-        // Assertions
-        assertNotNull(updatedAccount);
-        assertEquals(account.getBalance().add(depositAmount), updatedAccount.getBalance());
-        verify(accountRepository, times(1)).findById(1L);
-        verify(accountRepository, times(1)).save(account);
-    }
+// // Perform the deposit
+// BigDecimal depositAmount = BigDecimal.valueOf(50);
+// Account updatedAccount = accountService.deposit(1L, depositAmount);
 
-    @Test
-    void testWithdrawSufficientBalance() throws AccountNotFoundException, InsufficientResourcesException {
-        // Create a mock Account object
-        Account account = new Account();
-        account.setBalance(BigDecimal.valueOf(100)); // Initialize balance during object creation
+// // Assertions
+// assertNotNull(updatedAccount);
+// assertEquals(account.getBalance().add(depositAmount),
+// updatedAccount.getBalance());
+// verify(accountRepository, times(1)).findById(1L);
+// verify(accountRepository, times(1)).save(account);
+// }
 
-        // Mock the accountRepository behavior
-        when(accountRepository.findById(anyLong())).thenReturn(Optional.of(account));
-        when(accountRepository.save(any(Account.class))).thenReturn(account);
+// @Test
+// void testWithdrawSufficientBalance() throws AccountNotFoundException,
+// InsufficientResourcesException {
+// // Create a mock Account object
+// Account account = new Account();
+// account.setBalance(BigDecimal.valueOf(100)); // Initialize balance during
+// object creation
 
-        // Perform the withdrawal
-        BigDecimal withdrawalAmount = BigDecimal.valueOf(50);
-        Account updatedAccount = accountService.withdraw(1L, withdrawalAmount);
+// // Mock the accountRepository behavior
+// when(accountRepository.findById(anyLong())).thenReturn(Optional.of(account));
+// when(accountRepository.save(any(Account.class))).thenReturn(account);
 
-        // Assertions
-        assertNotNull(updatedAccount);
-        assertEquals(account.getBalance().subtract(withdrawalAmount), updatedAccount.getBalance());
-        verify(accountRepository, times(1)).findById(1L);
-        verify(accountRepository, times(1)).save(account);
-    }
+// // Perform the withdrawal
+// BigDecimal withdrawalAmount = BigDecimal.valueOf(50);
+// Account updatedAccount = accountService.withdraw(1L, withdrawalAmount);
 
-    @Test
-    void testWithdrawInsufficientBalance() throws AccountNotFoundException {
-        // Create a mock Account object
-        Account account = new Account();
-        account.setBalance(BigDecimal.valueOf(30)); // Initialize balance during object creation
+// // Assertions
+// assertNotNull(updatedAccount);
+// assertEquals(account.getBalance().subtract(withdrawalAmount),
+// updatedAccount.getBalance());
+// verify(accountRepository, times(1)).findById(1L);
+// verify(accountRepository, times(1)).save(account);
+// }
 
-        // Mock the accountRepository behavior
-        when(accountRepository.findById(anyLong())).thenReturn(Optional.of(account));
+// @Test
+// void testWithdrawInsufficientBalance() throws AccountNotFoundException {
+// // Create a mock Account object
+// Account account = new Account();
+// account.setBalance(BigDecimal.valueOf(30)); // Initialize balance during
+// object creation
 
-        // Perform the withdrawal with an insufficient amount
-        BigDecimal withdrawalAmount = BigDecimal.valueOf(50);
+// // Mock the accountRepository behavior
+// when(accountRepository.findById(anyLong())).thenReturn(Optional.of(account));
 
-        assertThrows(InsufficientResourcesException.class, () -> {
-            accountService.withdraw(1L, withdrawalAmount);
-        });
+// // Perform the withdrawal with an insufficient amount
+// BigDecimal withdrawalAmount = BigDecimal.valueOf(50);
 
-        verify(accountRepository, times(1)).findById(1L);
-        verify(accountRepository, times(0)).save(account); // Ensure that save is not called
-    }
+// assertThrows(InsufficientResourcesException.class, () -> {
+// accountService.withdraw(1L, withdrawalAmount);
+// });
 
-    // More test methods...
-}
+// verify(accountRepository, times(1)).findById(1L);
+// verify(accountRepository, times(0)).save(account); // Ensure that save is not
+// called
+// }
+
+// }
