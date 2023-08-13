@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// CustomerController.java
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
@@ -77,5 +76,4 @@ public class CustomerController {
         }
     }
 
-    // You can also define additional methods related to customers here if needed
 }

@@ -27,36 +27,32 @@ public class CustomerService {
     }
 
     public Customer createCustomer(Customer newCustomer) {
-        // Create a new customer with the provided properties
         Customer customer = new Customer();
         customer.setFirstName(newCustomer.getFirstName());
         customer.setLastName(newCustomer.getLastName());
-        // ... Set other properties as needed
 
-        // Save the new customer to the repository
         return customerRepository.save(customer);
     }
 
     public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
         Customer existingCustomer = customerRepository.findById(customerId).orElse(null);
         if (existingCustomer != null) {
-            // Update properties of existingCustomer with properties from updatedCustomer
+
             existingCustomer.setFirstName(updatedCustomer.getFirstName());
             existingCustomer.setLastName(updatedCustomer.getLastName());
-            // ... Update other properties as needed
 
             return customerRepository.save(existingCustomer);
         }
-        return null; // Handle customer not found
+        return null;
     }
 
     public boolean deleteCustomer(Long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isPresent()) {
             customerRepository.delete(customerOptional.get());
-            return true; // Customer was deleted successfully
+            return true;
         } else {
-            return false; // Customer was not found
+            return false;
         }
     }
 }

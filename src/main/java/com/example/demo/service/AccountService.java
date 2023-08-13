@@ -39,7 +39,6 @@ public class AccountService {
             synchronized (account) {
                 BigDecimal newBalance = account.getBalance().add(amount);
                 account.setBalance(newBalance);
-                // System.out.println(account);
                 return accountRepository.save(account);
             }
         } else {
@@ -92,7 +91,7 @@ public class AccountService {
 
     public Account getAccount(Long accountId) {
         Optional<Account> accountOptional = accountRepository.findById(accountId);
-        return accountOptional.orElse(null); // Return the found account or null if not found
+        return accountOptional.orElse(null);
     }
 
     public BigDecimal getAccountBalance(Long accountId) {
@@ -100,7 +99,7 @@ public class AccountService {
         if (account != null) {
             return account.getBalance();
         }
-        return BigDecimal.ZERO; // Handle account not found
+        return BigDecimal.ZERO;
 
     }
 

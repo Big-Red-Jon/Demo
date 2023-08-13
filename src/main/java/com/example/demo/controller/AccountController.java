@@ -52,7 +52,7 @@ public class AccountController {
         if (newAccount != null) {
             return ResponseEntity.ok(newAccount);
         } else {
-            return ResponseEntity.badRequest().build(); // Handle customer not found
+            return ResponseEntity.badRequest().build();
         }
     }
 

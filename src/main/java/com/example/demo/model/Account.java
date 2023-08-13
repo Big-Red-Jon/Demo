@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 
-// Account.java
 @Entity
 public class Account {
     @Id
@@ -74,5 +73,4 @@ public class Account {
         this.name = name;
     }
 
-    // Getters and setters
 }

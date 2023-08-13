@@ -12,7 +12,6 @@ class CustomerTest {
     void testCreateCustomerWithAccounts() {
         Customer customer = new Customer("John", "Doe");
 
-        // Create mock accounts
         Account account1 = new Account();
         account1.setBalance(BigDecimal.valueOf(100));
 
