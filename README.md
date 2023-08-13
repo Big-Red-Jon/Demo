@@ -19,3 +19,13 @@ Use H2 Console: Once you're logged in, you'll have access to the H2 Console's we
 http://localhost:8080/swagger-ui.html
 
  // System.out.println(account); Simple Fix Log
+
+
+ When you create a new account via postman, make sure you use Raw json to do so 
+    example {
+    "firstName": "Jane",
+    "lastName": "Doe"
+}
+ Make sure you go to Headers and create a new Content-Type Key and in the value add "application/json" The create will not work otherwise. 
+
+ All other CRUD can be done with a simple form-data, but make sure after a new customer is created that you change the Content-Type back to "multipart/form-data; boundary=<calculated when request is sent>"

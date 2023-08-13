@@ -35,9 +35,10 @@ public class Account {
     public Account() {
     }
 
-    public Account(BigDecimal balance, Customer customer) {
+    public Account(BigDecimal balance, Customer customer, String name) {
         this.balance = balance;
         this.customer = customer;
+        this.name = name;
     }
 
     public void transferTo(Account targetAccount, BigDecimal amount) {

@@ -24,6 +24,9 @@ public class AccountService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
@@ -48,15 +51,13 @@ public class AccountService {
         }
     }
 
-    public Account createAccount(Long customerId, BigDecimal initialBalance) {
-        Customer customer = customerRepository.findById(customerId).orElse(null);
-
+    public Account createAccount(Long customerId, BigDecimal initialBalance, String name) {
+        Customer customer = customerService.getCustomerById(customerId);
         if (customer != null) {
-            Account account = new Account(initialBalance, customer);
-            return accountRepository.save(account);
+            Account newAccount = new Account(initialBalance, customer, name);
+            return accountRepository.save(newAccount);
         }
-
-        return null; // Handle customer not found
+        return null;
     }
 
     public void deleteAccount(Long accountId) throws AccountNotFoundException {

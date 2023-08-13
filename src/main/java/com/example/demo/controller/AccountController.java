@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,9 +44,11 @@ public class AccountController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Account> createAccount(@RequestParam Long customerId,
-            @RequestParam BigDecimal initialBalance) {
-        Account newAccount = accountService.createAccount(customerId, initialBalance);
+    public ResponseEntity<Account> createAccount(
+            @RequestParam Long customerId,
+            @RequestParam BigDecimal initialBalance,
+            @RequestParam String name) {
+        Account newAccount = accountService.createAccount(customerId, initialBalance, name);
         if (newAccount != null) {
             return ResponseEntity.ok(newAccount);
         } else {
