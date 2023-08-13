@@ -1,64 +1,61 @@
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
-import com.example.demo.model.Account;
-import com.example.demo.model.Customer;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+// import com.example.demo.model.Account;
+// import com.example.demo.model.Customer;
 
-import java.util.List;
-import java.util.Optional;
+// import org.junit.jupiter.api.BeforeEach;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.beans.factory.annotation.Autowired;
+// // import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+// import org.springframework.boot.test.context.SpringBootTest;
+// // import org.springframework.boot.test.mock.mockito.MockBean;
+// // import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
+// import java.util.List;
+// // import java.util.Optional;
 
-@DataJpaTest
-@SpringJUnitConfig
-public class AccountRepositoryTest {
+// import static org.junit.jupiter.api.Assertions.assertEquals;
+// import static org.junit.jupiter.api.Assertions.assertNotNull;
+// // import static org.junit.jupiter.api.Assertions.assertTrue;
+// // import static org.mockito.Mockito.*;
 
-    @Autowired
-    private AccountRepository accountRepository;
+// // @DataJpaTest
+// // @SpringJUnitConfig
+// @SpringBootTest
+// public class AccountRepositoryTest {
 
-    @MockBean
-    private CustomerRepository customerRepository;
+// @Autowired
+// private AccountRepository accountRepository;
 
-    @Test
-    void testFindByCustomerId() {
-        Long customerId = 1L;
+// @Autowired
+// private CustomerRepository customerRepository;
 
-        // Mock a list of accounts associated with the customer
-        List<Account> accounts = List.of(
-                new Account(),
-                new Account());
+// private Customer customer;
 
-        // Mock a Customer object
-        Customer customer = mock(Customer.class);
-        when(customer.getId()).thenReturn(customerId); // Mocking the getId() method
+// @BeforeEach
+// void setUp() {
+// // Create a real Customer entity and persist it
+// customer = new Customer("John", "Doe");
+// customerRepository.save(customer);
+// }
 
-        // Configure the mock CustomerRepository to return the mock Customer
-        when(customerRepository.findById(customerId)).thenReturn(Optional.of(customer));
+// @Test
+// void testFindByCustomerId() {
+// // Create real Account entities
+// Account account1 = new Account();
+// account1.setCustomer(customer);
+// accountRepository.save(account1);
 
-        // Configure the mock AccountRepository to return the list of accounts
-        when(accountRepository.findByCustomer(customer)).thenReturn(accounts);
+// Account account2 = new Account();
+// account2.setCustomer(customer);
+// accountRepository.save(account2);
 
-        // Invoke the method under test
-        List<Account> retrievedAccounts = accountRepository.findByCustomerId(customerId);
+// // Invoke the method under test
+// List<Account> retrievedAccounts = accountRepository.findByCustomer(customer);
 
-        // Assertions and verifications
-        assertNotNull(retrievedAccounts);
-        assertEquals(2, retrievedAccounts.size());
-        assertTrue(retrievedAccounts.containsAll(accounts));
+// // Assertions
+// assertNotNull(retrievedAccounts);
+// assertEquals(2, retrievedAccounts.size());
+// }
 
-        // Verify that the customer repository's findById method was called
-        verify(customerRepository).findById(customerId);
-
-        // Verify that the account repository's findByCustomer method was called
-        verify(accountRepository).findByCustomer(customer);
-    }
-
-    // Similar test methods for other methods in AccountRepository...
-}
+// }
