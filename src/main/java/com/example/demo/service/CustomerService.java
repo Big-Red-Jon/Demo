@@ -26,33 +26,37 @@ public class CustomerService {
         return customerRepository.findById(customerId).orElse(null);
     }
 
-    // public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
-    // Customer existingCustomer =
-    // customerRepository.findById(customerId).orElse(null);
-    // if (existingCustomer != null) {
-    // // Update properties of existingCustomer with properties from updatedCustomer
-    // // Example: existingCustomer.setName(updatedCustomer.getName());
-    // // ...
-    // return customerRepository.save(existingCustomer);
-    // }
-    // return null;
-    // }
+    public Customer createCustomer(Customer newCustomer) {
+        // Create a new customer with the provided properties
+        Customer customer = new Customer();
+        customer.setFirstName(newCustomer.getFirstName());
+        customer.setLastName(newCustomer.getLastName());
+        // ... Set other properties as needed
 
-    // public Customer createCustomer(Customer customer) {
-    // return customerRepository.save(customer);
-    // }
+        // Save the new customer to the repository
+        return customerRepository.save(customer);
+    }
 
-    // public Customer updateCustomerDetails(Customer updatedCustomer) {
-    // return customerRepository.save(updatedCustomer);
-    // }
+    public Customer updateCustomer(Long customerId, Customer updatedCustomer) {
+        Customer existingCustomer = customerRepository.findById(customerId).orElse(null);
+        if (existingCustomer != null) {
+            // Update properties of existingCustomer with properties from updatedCustomer
+            existingCustomer.setFirstName(updatedCustomer.getFirstName());
+            existingCustomer.setLastName(updatedCustomer.getLastName());
+            // ... Update other properties as needed
 
-    // public boolean deleteCustomer(Long id) {
-    // Optional<Customer> customerOptional = customerRepository.findById(id);
-    // if (customerOptional.isPresent()) {
-    // customerRepository.delete(customerOptional.get());
-    // return true; // Customer was deleted successfully
-    // } else {
-    // return false; // Customer was not found
-    // }
-    // }
+            return customerRepository.save(existingCustomer);
+        }
+        return null; // Handle customer not found
+    }
+
+    public boolean deleteCustomer(Long id) {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if (customerOptional.isPresent()) {
+            customerRepository.delete(customerOptional.get());
+            return true; // Customer was deleted successfully
+        } else {
+            return false; // Customer was not found
+        }
+    }
 }

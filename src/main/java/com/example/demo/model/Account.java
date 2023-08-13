@@ -25,11 +25,20 @@ public class Account {
     }
 
     public void setBalance(BigDecimal add) {
+        this.balance = add;
     }
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    public Account() {
+    }
+
+    public Account(BigDecimal balance, Customer customer) {
+        this.balance = balance;
+        this.customer = customer;
+    }
 
     public void transferTo(Account targetAccount, BigDecimal amount) {
         if (targetAccount == null) {

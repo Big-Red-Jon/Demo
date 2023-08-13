@@ -39,6 +39,14 @@ public class Customer {
         return lastName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public void addAccount(Account account) {
         accounts.add(account);
         account.setCustomer(this); // Set the account's customer reference

@@ -17,3 +17,5 @@ Login to H2 Console: After entering the connection details, click the "Connect" 
 Use H2 Console: Once you're logged in, you'll have access to the H2 Console's web interface. You can execute SQL queries, view tables, and interact with the in-memory database.
 
 http://localhost:8080/swagger-ui.html
+
+ // System.out.println(account); Simple Fix Log
