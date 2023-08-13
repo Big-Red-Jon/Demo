@@ -5,19 +5,20 @@ import java.util.List;
 
 import com.example.demo.model.Account;
 import com.example.demo.repository.AccountRepository;
-import com.example.demo.repository.CustomerRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import javax.naming.InsufficientResourcesException;
+import javax.security.auth.login.AccountNotFoundException;
+// import javax.transaction.TransactionalException;
+
 @Service
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
@@ -27,23 +28,47 @@ public class AccountService {
         return accountRepository.findByCustomerId(customerId);
     }
 
-    public Account deposit(Long accountId, BigDecimal amount) {
+    public Account deposit(Long accountId, BigDecimal amount) throws AccountNotFoundException {
         Optional<Account> accountOptional = accountRepository.findById(accountId);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
-            account.setBalance(account.getBalance().add(amount));
-            return accountRepository.save(account);
+
+            synchronized (account) {
+                BigDecimal newBalance = account.getBalance().add(amount);
+                account.setBalance(newBalance);
+                return accountRepository.save(account);
+            }
+        } else {
+            throw new AccountNotFoundException("Account not found");
         }
-        return null; // Handle account not found
     }
 
-    public Account withdraw(Long accountId, BigDecimal amount) {
-        Account account = accountRepository.findById(accountId).orElse(null);
-        if (account != null && account.getBalance().compareTo(amount) >= 0) {
-            account.setBalance(account.getBalance().subtract(amount));
-            return accountRepository.save(account);
+    public Account withdraw(Long accountId, BigDecimal amount)
+            throws AccountNotFoundException, InsufficientResourcesException {
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+
+        if (accountOptional.isPresent()) {
+            Account account = accountOptional.get();
+
+            synchronized (account) {
+                BigDecimal currentBalance = account.getBalance();
+
+                if (currentBalance.compareTo(amount) >= 0) {
+                    BigDecimal newBalance = currentBalance.subtract(amount);
+                    account.setBalance(newBalance);
+                    return accountRepository.save(account);
+                } else {
+                    throw new InsufficientResourcesException("Insufficient funds");
+                }
+            }
+        } else {
+            throw new AccountNotFoundException("Account not found");
         }
-        return null; // Handle insufficient funds or account not found
+    }
+
+    public Account getAccount(Long accountId) {
+        Optional<Account> accountOptional = accountRepository.findById(accountId);
+        return accountOptional.orElse(null); // Return the found account or null if not found
     }
 
     public BigDecimal getAccountBalance(Long accountId) {
@@ -55,28 +80,18 @@ public class AccountService {
 
     }
 
-    public Account createAccount(Account newAccount) {
-        // Implementation for createAccount method
-        return null;
+    public void transfer(Long sourceAccountId, Long targetAccountId, BigDecimal amount)
+            throws AccountNotFoundException, InsufficientResourcesException {
+        Account sourceAccount = getAccountById(sourceAccountId);
+        Account targetAccount = getAccountById(targetAccountId);
+        sourceAccount.transferTo(targetAccount, amount);
+        accountRepository.save(sourceAccount);
+        accountRepository.save(targetAccount);
     }
 
-    public Account getAccount(Long accountId) {
-        return null;
-        // Implementation for getAccount method
+    private Account getAccountById(Long accountId) throws AccountNotFoundException {
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new AccountNotFoundException("Account not found"));
     }
 
-    public Account updateAccount(Long accountId, Account updatedAccount) {
-        // Implementation for updateAccount method
-        return null;
-    }
-
-    public boolean deleteAccount(Long accountId) {
-        Optional<Account> accountOptional = accountRepository.findById(accountId);
-        if (accountOptional.isPresent()) {
-            accountRepository.delete(accountOptional.get());
-            return true; // Account was deleted successfully
-        } else {
-            return false; // Account was not found
-        }
-    }
 }
