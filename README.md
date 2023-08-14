@@ -62,8 +62,8 @@ git clone: https://github.com/Big-Red-Jon/Demo
 - When creating a new account via Postman, make sure to use Raw JSON and set the `Content-Type` header to `application/json`.
 - After creating a new customer, change the `Content-Type` header back to `multipart/form-data` for other CRUD operations.
   
-<img width="515" alt="Screenshot 2023-08-13 at 7 05 46 PM" src="https://github.com/Big-Red-Jon/Demo/assets/46500097/fd213c9f-d400-4705-9090-e181357da6a3">
 
+<img width="461" alt="Screenshot 2023-08-13 at 7 07 10 PM" src="https://github.com/Big-Red-Jon/Demo/assets/46500097/79b109a9-f50c-4466-8c60-8a05eb486586">
 
 
 
