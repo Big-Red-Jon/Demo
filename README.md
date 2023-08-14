@@ -62,38 +62,6 @@ git clone: https://github.com/Big-Red-Jon/Demo
 - When creating a new account via Postman, make sure to use Raw JSON and set the `Content-Type` header to `application/json`.
 - After creating a new customer, change the `Content-Type` header back to `multipart/form-data` for other CRUD operations.
 
-System Architecture Diagram:
-
-                        +-------------------+
-                        |    Swagger UI     |
-                        |   Documentation   |
-                        +-------------------+
-                               |
-                               v
-                        +-------------------+
-                        |    Spring Boot    |
-                        |    Application    |
-                        +-------------------+
-                               |
-              +----------------|-----------------+
-              |                v                 |
-+-------------------+    +-------------------+   |
-| Customer API      |    |    Account API    |   |
-|   Endpoints       |    |   Endpoints       |   |
-| GET /customers    |    | GET /accounts     |   |
-| POST /customers   |    | POST /accounts    |   |
-| PUT /customers    |    | PUT /accounts     |   |
-| DELETE /customers |    | DELETE /accounts  |   |
-+-------------------+    +-------------------+   |
-              |                |                 |
-              +----------------|-----------------+
-                               |
-                               v
-                        +-------------------+
-                        |     H2 Database    |
-                        |   (In-Memory)     |
-                        +-------------------+
-
 
 
 
