@@ -58,11 +58,12 @@ git clone: https://github.com/Big-Red-Jon/Demo
 - `src/main/java/com/example/demo/repository`: Contains the JPA repositories for database interactions.
 - `src/main/java/com/example/demo`: Contains the main application class and Swagger configuration.
 
-## Usage Tips
+## Usage Tips If Using Postman
 
 - When creating a new account via Postman, make sure to use Raw JSON and set the `Content-Type` header to `application/json`.
 - After creating a new customer, change the `Content-Type` header back to `multipart/form-data` for other CRUD operations.
-
+- Currently the localhost is http://localhost:8080. Once you have the application running, use Swagger UI to run any fetch calls. 
+  
 ##Maven
 
 You can download Maven from the official Apache Maven website. Here's how:
