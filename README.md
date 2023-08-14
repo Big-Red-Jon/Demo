@@ -63,7 +63,8 @@ git clone: https://github.com/Big-Red-Jon/Demo
 - After creating a new customer, change the `Content-Type` header back to `multipart/form-data` for other CRUD operations.
   
 
-<img width="461" alt="Screenshot 2023-08-13 at 7 07 10 PM" src="https://github.com/Big-Red-Jon/Demo/assets/46500097/79b109a9-f50c-4466-8c60-8a05eb486586">
+<img width="423" alt="Screenshot 2023-08-13 at 7 10 21 PM" src="https://github.com/Big-Red-Jon/Demo/assets/46500097/4844fb63-d0ea-477c-a273-cbbd56ae6ecb">
+
 
 
 
