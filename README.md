@@ -64,7 +64,7 @@ git clone: https://github.com/Big-Red-Jon/Demo
 - After creating a new customer, change the `Content-Type` header back to `multipart/form-data` for other CRUD operations.
 - Currently the localhost is http://localhost:8080. Once you have the application running, use Swagger UI to run any fetch calls. 
   
-##Maven
+## Maven
 
 You can download Maven from the official Apache Maven website. Here's how:
 
