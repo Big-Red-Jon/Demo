@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Customer;
+import com.example.demo.service.AccountService;
 import com.example.demo.service.CustomerService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private AccountService accountService;
+
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
         List<Customer> customers = customerService.getAllCustomers();
@@ -38,9 +43,21 @@ public class CustomerController {
         }
     }
 
+    // @PostMapping
+    // public ResponseEntity<Customer> createCustomer(@RequestBody Customer
+    // newCustomer) {
+    // Customer createdCustomer = customerService.createCustomer(newCustomer);
+    // return ResponseEntity.ok(createdCustomer);
+    // }
+
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer) {
+        // Create the new customer
         Customer createdCustomer = customerService.createCustomer(newCustomer);
+
+        // Create a new account with a balance of 0.00 for the created customer
+        accountService.createAccount(createdCustomer.getId(), BigDecimal.ZERO, "Checking Account");
+
         return ResponseEntity.ok(createdCustomer);
     }
 
