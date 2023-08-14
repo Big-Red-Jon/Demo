@@ -67,12 +67,12 @@ git clone: https://github.com/Big-Red-Jon/Demo
 
 You can download Maven from the official Apache Maven website. Here's how:
 
-- Visit the Apache Maven website: https://maven.apache.org/
-- On the main page, look for the "Download" section.
-- Click on the "Download" link to access the download page.
-- On the download page, you'll see the latest version of Maven listed. Click on the link to download the binary zip file.
-- Once the download is complete, extract the contents of the zip file to a directory of your choice. This will be your Maven installation directory.
-- Set up the PATH environment variable to include the bin directory of your Maven installation. This will allow you to run Maven commands from any terminal window.
+* Visit the Apache Maven website: https://maven.apache.org/
+* On the main page, look for the "Download" section.
+* Click on the "Download" link to access the download page.
+* On the download page, you'll see the latest version of Maven listed. Click on the link to download the binary zip file.
+* Once the download is complete, extract the contents of the zip file to a directory of your choice. This will be your Maven installation directory.
+* Set up the PATH environment variable to include the bin directory of your Maven installation. This will allow you to run Maven commands from any terminal window.
 
 ## Diagram
 
