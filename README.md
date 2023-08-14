@@ -1,4 +1,4 @@
-# Demo - HCA Parallon Java Code Exercise
+# Demo - Java Code Exercise
 
 This is a simple Spring Boot application that demonstrates the implementation of a RESTful API for managing customer accounts. The application allows you to create, update, delete, and retrieve customer accounts using various endpoints.
 
