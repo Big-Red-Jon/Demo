@@ -77,14 +77,14 @@ System Architecture Diagram:
                                |
               +----------------|-----------------+
               |                v                 |
-+-------------------+    +-------------------+    |
-| Customer API      |    |    Account API    |    |
-|   Endpoints       |    |   Endpoints       |    |
-| GET /customers    |    | GET /accounts     |    |
-| POST /customers   |    | POST /accounts    |    |
-| PUT /customers    |    | PUT /accounts     |    |
-| DELETE /customers |    | DELETE /accounts  |    |
-+-------------------+    +-------------------+    |
++-------------------+    +-------------------+   |
+| Customer API      |    |    Account API    |   |
+|   Endpoints       |    |   Endpoints       |   |
+| GET /customers    |    | GET /accounts     |   |
+| POST /customers   |    | POST /accounts    |   |
+| PUT /customers    |    | PUT /accounts     |   |
+| DELETE /customers |    | DELETE /accounts  |   |
++-------------------+    +-------------------+   |
               |                |                 |
               +----------------|-----------------+
                                |
