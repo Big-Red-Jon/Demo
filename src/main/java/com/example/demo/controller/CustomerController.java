@@ -43,19 +43,11 @@ public class CustomerController {
         }
     }
 
-    // @PostMapping
-    // public ResponseEntity<Customer> createCustomer(@RequestBody Customer
-    // newCustomer) {
-    // Customer createdCustomer = customerService.createCustomer(newCustomer);
-    // return ResponseEntity.ok(createdCustomer);
-    // }
-
     @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer) {
-        // Create the new customer
+
         Customer createdCustomer = customerService.createCustomer(newCustomer);
 
-        // Create a new account with a balance of 0.00 for the created customer
         accountService.createAccount(createdCustomer.getId(), BigDecimal.ZERO, "Checking Account");
 
         return ResponseEntity.ok(createdCustomer);
